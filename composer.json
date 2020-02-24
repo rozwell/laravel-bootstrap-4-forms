@@ -1,5 +1,5 @@
 {
-    "name": "netojose/laravel-bootstrap-4-forms",
+    "name": "rozwell/laravel-bootstrap-4-forms",
     "type": "package",
     "description": "Bootstrap 4 form builder for Laravel 5",
     "keywords": [
@@ -16,9 +16,13 @@
         {
             "name": "José Sousa",
             "email": "sputinykster@gmail.com"
+        },
+        {
+            "name": "rozwell",
+            "email": "rozwell69@gmail.com"
         }
     ],
-    "version": "3.0.4",
+    "version": "3.0.5",
     "minimum-stability": "dev",
     "require": {},
     "autoload": {

@@ -418,12 +418,12 @@ class FormService
      * Create a checkbox input
      *
      * @param string $name
-     * @param string $value
+     * @param mixed $value
      * @param string $label
      * @param bool   $checked
      * @return FormService
      */
-    public function checkbox(string $name = null, string $label = null, string $value = 'on', bool $checked = null): FormService
+    public function checkbox(string $name = null, string $label = null, $value = 'on', bool $checked = null): FormService
     {
         return $this->_radioOrCheckbox('checkbox', $name, $label, $value, $checked);
     }

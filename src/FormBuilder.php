@@ -261,9 +261,9 @@ class FormBuilder
 
         if ($this->isRadioOrCheckbox()) {
             if ($this->hasOldInput()) {
-                $isChecked = old($name) === $value;
+                $isChecked = old($name) == $value;
             } else {
-                $isChecked = isset($formData[$name]) ? $formData[$name] === $value : $checked;
+                $isChecked = isset($formData[$name]) ? $formData[$name] == $value : $checked;
             }
             $attributes['checked'] = $isChecked;
         }
