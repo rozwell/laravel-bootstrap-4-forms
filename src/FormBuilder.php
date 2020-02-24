@@ -214,12 +214,12 @@ class FormBuilder
 
     private function getInputAttributes(): array
     {
-        extract($this->get('render', 'type', 'multiple', 'name', 'size', 'placeholder', 'help', 'disabled', 'readonly', 'required', 'autocomplete', 'min', 'max', 'value', 'checked', 'formData', 'disableValidation'));
+        extract($this->get('render', 'type', 'multiple', 'name', 'size', 'placeholder', 'class', 'help', 'disabled', 'readonly', 'required', 'autocomplete', 'min', 'max', 'value', 'checked', 'formData', 'disableValidation'));
 
         $isRadioOrCheckbox = $this->isRadioOrCheckbox();
         $type = $isRadioOrCheckbox ? $render : $type;
 
-        $class = 'form-check-input';
+        $class = implode(' ', array_merge(['form-check-input'], (array)$class));
         if (!$isRadioOrCheckbox) {
             $class = 'form-control';
             switch ($type) {

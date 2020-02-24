@@ -278,6 +278,19 @@ class FormService
     }
 
     /**
+     * Create a number input
+     *
+     * @param string $name
+     * @param string $label
+     * @param string $default
+     * @return FormService
+     */
+    public function number(string $name = null, $label = null, string $default = null): FormService
+    {
+        return $this->render('input')->type('number')->name($name)->label($label)->value($default);
+    }
+
+    /**
      * Create a date input
      *
      * @param string $name
@@ -789,6 +802,17 @@ class FormService
     public function placeholder($placeholder): FormService
     {
         return $this->_set('placeholder', $placeholder);
+    }
+
+    /**
+     * Add additional classes for an input
+     *
+     * @param string|array $classes
+     * @return FormService
+     */
+    public function class($classes = ''): FormService
+    {
+        return $this->_set('class', $classes);
     }
 
     /**
