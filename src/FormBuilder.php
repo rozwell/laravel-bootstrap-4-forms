@@ -323,7 +323,7 @@ class FormBuilder
 
     private function wrapperInput(string $input): string
     {
-        extract($this->get('type', 'help', 'wrapperAttrs', 'formInline', 'name'));
+        extract($this->get('type', 'help', 'wrapperAttrs', 'wrapperClass', 'formInline', 'name'));
 
         if ($type === 'hidden') {
             return $input;
@@ -336,7 +336,8 @@ class FormBuilder
         $attrs          = $wrapperAttrs ?? [];
         $attrs['class'] = $this->createAttrsList(
             $attrs['class'] ?? null,
-            $formInline ? 'input-group' : 'form-group'
+            $formInline ? 'input-group' : 'form-group',
+            ...(array)$wrapperClass
         );
         $attributes = $this->buildHtmlAttrs($attrs, false);
 
@@ -345,13 +346,14 @@ class FormBuilder
 
     private function wrapperRadioCheckbox(string $input, string $type = null): string
     {
-        extract($this->get('inline', 'name', 'wrapperAttrs'));
+        extract($this->get('inline', 'name', 'wrapperAttrs', 'wrapperClass'));
 
         $attrs = $wrapperAttrs ?? [];
         $attrs['class'] = $this->createAttrsList(
             'form-check',
             [$inline, 'form-check-inline'],
-            $attrs['class'] ?? null
+            $attrs['class'] ?? null,
+            ...(array)$wrapperClass
         );
         $attributes = $this->buildHtmlAttrs($attrs, false);
         $label = $this->renderLabel();

@@ -816,6 +816,17 @@ class FormService
     }
 
     /**
+     * Add additional classes for the wrapper
+     *
+     * @param string|array $classes
+     * @return FormService
+     */
+    public function wrapperClass($classes = ''): FormService
+    {
+        return $this->_set('wrapperClass', $classes);
+    }
+
+    /**
      * Set custom attributes for an input
      *
      * @param array $attrs
