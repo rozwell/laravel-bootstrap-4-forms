@@ -219,7 +219,8 @@ class FormBuilder
         $isRadioOrCheckbox = $this->isRadioOrCheckbox();
         $type = $isRadioOrCheckbox ? $render : $type;
 
-        $class = implode(' ', array_merge(['form-check-input'], (array)$class));
+        $setClass = (array)$class;
+        $class = 'form-check-input';
         if (!$isRadioOrCheckbox) {
             $class = 'form-control';
             switch ($type) {
@@ -234,6 +235,9 @@ class FormBuilder
             if ($size) {
                 $class .= ' form-control-' . $size;
             }
+        }
+        if ($setClass) {
+            $class .= ' '.implode(' ', $setClass);
         }
 
         $id = $this->getId();
