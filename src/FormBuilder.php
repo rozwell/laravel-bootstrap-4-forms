@@ -168,7 +168,7 @@ class FormBuilder
     {
         $attributes = $this->getInputAttributes();
         $attrs = $this->buildHtmlAttrs($attributes);
-        return $this->wrapperRadioCheckbox('<input ' . $attrs . '>');
+        return $this->wrapperRadioCheckbox('<input ' . $attrs . '>', $attributes['type']);
     }
 
     private function renderRadio(): string
@@ -244,7 +244,7 @@ class FormBuilder
 
         $attributes = [
             'type' => $type,
-            'name' => $name,
+            'name' => $this->getName(),
             'id' => $id
         ];
 
@@ -343,7 +343,7 @@ class FormBuilder
         return '<div ' . $attributes . '>' . $label . $input . $helpText . $error . '</div>';
     }
 
-    private function wrapperRadioCheckbox(string $input): string
+    private function wrapperRadioCheckbox(string $input, string $type = null): string
     {
         extract($this->get('inline', 'name', 'wrapperAttrs'));
 
@@ -356,7 +356,9 @@ class FormBuilder
         $attributes = $this->buildHtmlAttrs($attrs, false);
         $label = $this->renderLabel();
         $error = $this->getInputErrorMarkup($name);
-        return '<div ' . $attributes . '>' . $input . $label . $error . '</div>';
+        $hidden = $type == 'checkbox' ? '<input type="hidden" name="' . $this->getName($name) . '" value="0" />' : '';
+
+        return '<div ' . $attributes . '>' . $hidden . $input . $label . $error . '</div>';
     }
 
     private function getInputErrorMarkup(string $name): string
@@ -383,6 +385,20 @@ class FormBuilder
         }
 
         return ($formIdPrefix ?? 'inp-') . $name . ($render === 'radio' ? '-' . $value : '');
+    }
+
+    private function getName()
+    {
+        extract($this->get('name'));
+
+        if (($pos = strpos($name, '.')) !== false) {
+            $inputName = substr_replace($name, '[', $pos, 1);
+            $inputName = str_replace('.', '][', $inputName).']';
+
+            return $inputName;
+        }
+
+        return $name;
     }
 
     private function hasOldInput()
