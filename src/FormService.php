@@ -893,6 +893,28 @@ class FormService
     }
 
     /**
+     * Add input group prepend text
+     *
+     * @param string $text
+     * @return FormService
+     */
+    public function prepend(string $text): FormService
+    {
+        return $this->_set('groupPrepend', $text);
+    }
+
+    /**
+     * Add input group append text
+     *
+     * @param string $text
+     * @return FormService
+     */
+    public function append(string $text): FormService
+    {
+        return $this->_set('groupAppend', $text);
+    }
+
+    /**
      * Create radio or checkbox input
      *
      * @param string $render

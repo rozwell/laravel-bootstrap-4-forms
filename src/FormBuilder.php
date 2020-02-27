@@ -342,7 +342,7 @@ class FormBuilder
 
     private function wrapperInput(string $input): string
     {
-        extract($this->get('type', 'help', 'wrapperAttrs', 'wrapperClass', 'wrapperStyle', 'formInline', 'name'));
+        extract($this->get('type', 'help', 'wrapperAttrs', 'wrapperClass', 'wrapperStyle', 'groupPrepend', 'groupAppend', 'formInline', 'name'));
 
         if ($type === 'hidden') {
             return $input;
@@ -360,6 +360,12 @@ class FormBuilder
         );
         $attrs['style'] = $this->formatStyle($wrapperStyle);
         $attributes = $this->buildHtmlAttrs($attrs, false);
+
+        $prepend = $groupPrepend ? sprintf('<div class="input-group-prepend"><span class="input-group-text">%s</span></div>', $groupPrepend) : '';
+        $append = $groupAppend ? sprintf('<div class="input-group-append"><span class="input-group-text">%s</span></div>', $groupAppend) : '';
+        if ($prepend || $append) {
+            $input = '<div class="input-group">' . $prepend . $input . $append . '</div>';
+        }
 
         return '<div ' . $attributes . '>' . $label . $input . $helpText . $error . '</div>';
     }
