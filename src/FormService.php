@@ -490,6 +490,17 @@ class FormService
     }
 
     /**
+     * Set id label is for
+     *
+     * @param string $for
+     * @return FormService
+     */
+    public function for($for): FormService
+    {
+        return $this->_set('for', $for);
+    }
+
+    /**
      * Create a button
      *
      * @param string $value

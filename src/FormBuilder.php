@@ -301,7 +301,7 @@ class FormBuilder
 
     private function renderLabel(): string
     {
-        extract($this->get('label', 'formInline', 'render', 'style'));
+        extract($this->get('label', 'formInline', 'render', 'style', 'for'));
 
         $class = in_array($render, ['checkbox', 'radio']) ? 'form-check-label' : '';
         if ($formInline) {
@@ -310,7 +310,7 @@ class FormBuilder
 
         $id = $this->getId();
         $attrs = $this->buildHtmlAttrs([
-            'for' => $id,
+            'for' => $for ?: $id,
             'class' => $class,
             'style' => $this->formatStyle($style),
         ], false);
