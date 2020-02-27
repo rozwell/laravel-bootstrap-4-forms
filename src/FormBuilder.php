@@ -413,7 +413,7 @@ class FormBuilder
             return $id;
         }
 
-        return ($formIdPrefix ?? 'inp-') . $name . ($render === 'radio' ? '-' . $value : '');
+        return ($formIdPrefix ?? 'inp-') . str_replace('.', '-', trim($name, '.-*')) . ($render === 'radio' ? '-' . $value : '');
     }
 
     private function getName()
