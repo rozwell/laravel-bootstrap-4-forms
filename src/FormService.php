@@ -422,9 +422,9 @@ class FormService
      * @param bool $multiple
      * @return FormService
      */
-    public function multiple(bool $status = true): FormService
+    public function multiple(bool $multiple = true): FormService
     {
-        return $this->_set('multiple', $status);
+        return $this->_set('multiple', $multiple);
     }
 
     /**
@@ -763,56 +763,56 @@ class FormService
     /**
      * Set outline style
      *
-     * @param bool $status
+     * @param bool $outline
      * @return FormService
      */
-    public function outline(bool $status = true): FormService
+    public function outline(bool $outline = true): FormService
     {
-        return $this->_set('outline', $status);
+        return $this->_set('outline', $outline);
     }
 
     /**
      * Set block style
      *
-     * @param bool $status
+     * @param bool $block
      * @return FormService
      */
-    public function block(bool $status = true): FormService
+    public function block(bool $block = true): FormService
     {
-        return $this->_set('block', $status);
+        return $this->_set('block', $block);
     }
 
     /**
      * Set readonly style
      *
-     * @param bool $status
+     * @param bool $readonly
      * @return FormService
      */
-    public function readonly($status = true): FormService
+    public function readonly($readonly = true): FormService
     {
-        return $this->_set('readonly', $status);
+        return $this->_set('readonly', $readonly);
     }
 
     /**
      * Set the input disabled status
      *
-     * @param bool $status
+     * @param bool $disabled
      * @return FormService
      */
-    public function disabled($status = true): FormService
+    public function disabled($disabled = true): FormService
     {
-        return $this->_set('disabled', $status);
+        return $this->_set('disabled', $disabled);
     }
 
     /**
      * Set the input required status
      *
-     * @param bool $status
+     * @param bool $required
      * @return FormService
      */
-    public function required($status = true): FormService
+    public function required($required = true): FormService
     {
-        return $this->_set('required', $status);
+        return $this->_set('required', $required);
     }
 
     /**
