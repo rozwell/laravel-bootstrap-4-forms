@@ -428,6 +428,17 @@ class FormService
     }
 
     /**
+     * Adds "[]" to the name attribute
+     *
+     * @param bool $isArray
+     * @return FormService
+     */
+    public function isArray(bool $isArray = true): FormService
+    {
+        return $this->_set('isArray', $isArray);
+    }
+
+    /**
      * Create a checkbox input
      *
      * @param string $name

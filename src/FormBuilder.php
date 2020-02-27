@@ -418,16 +418,15 @@ class FormBuilder
 
     private function getName()
     {
-        extract($this->get('name'));
+        extract($this->get('name', 'isArray'));
 
         if (($pos = strpos($name, '.')) !== false) {
             $inputName = substr_replace($name, '[', $pos, 1);
             $inputName = str_replace('.', '][', $inputName).']';
-
-            return $inputName;
+            $name = $inputName;
         }
 
-        return $name;
+        return $name.($isArray ? '[]' : '');
     }
 
     private function hasOldInput()
