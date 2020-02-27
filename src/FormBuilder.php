@@ -18,6 +18,13 @@ class FormBuilder
         $this->attrs[$key] = $value;
     }
 
+    private function formatStyle($style)
+    {
+        return implode(';', array_map(function ($v) {
+            return trim($v, ';');
+        }, (array)$style));
+    }
+
     private function formatMethod($value)
     {
         return strtolower($value);
@@ -60,7 +67,7 @@ class FormBuilder
 
     private function renderFormOpen(): string
     {
-        extract($this->get('id', 'method', 'url', 'formMultipart', 'formInline', 'autocomplete'));
+        extract($this->get('id', 'method', 'url', 'formMultipart', 'formInline', 'autocomplete', 'style'));
 
         if (!$method) {
             $method = 'post';
@@ -74,7 +81,8 @@ class FormBuilder
             'enctype' => $enctype,
             'autocomplete' => $autocomplete,
             'class' => $formInline ? 'form-inline' : null,
-            'id' => $id
+            'style' => $this->formatStyle($style),
+            'id' => $id,
         ]);
 
         $output = '<form ' . $attrs . '>';
@@ -119,8 +127,13 @@ class FormBuilder
             return '';
         }
 
-        extract($this->get('errorsHeader', 'id'));
-        $attrs = $this->buildHtmlAttrs(['class' => 'alert alert-danger', 'role' => 'alert', 'id' => $id]);
+        extract($this->get('errorsHeader', 'id', 'wrapperStyle'));
+        $attrs = $this->buildHtmlAttrs([
+            'class' => 'alert alert-danger',
+            'style' => $this->formatStyle($wrapperStyle),
+            'role' => 'alert',
+            'id' => $id,
+        ]);
         $output = '<div ' . $attrs . '><ul class="list-unstyled">';
         if ($errorsHeader) {
             $output .= '<h4 class="alert-heading">' . $this->getText($errorsHeader) . '</h4>';
@@ -180,17 +193,17 @@ class FormBuilder
 
     private function renderAnchor(): string
     {
-        extract($this->get('url', 'value'));
+        extract($this->get('url', 'value', 'style'));
         $class = $this->getBtnAnchorClasses();
-        $attrs = $this->buildHtmlAttrs(['href' => $url, 'class' => $class]);
+        $attrs = $this->buildHtmlAttrs(['href' => $url, 'class' => $class, 'style' => $this->formatStyle($style)]);
         return '<a ' . $attrs . '>' . $value . '</a>';
     }
 
     private function renderButton(): string
     {
-        extract($this->get('type', 'value', 'disabled', 'class'));
+        extract($this->get('type', 'value', 'disabled', 'class', 'style'));
         $class = implode(' ', array_merge((array)$this->getBtnAnchorClasses(), (array)$class));
-        $attrs = $this->buildHtmlAttrs(['type' => $type, 'class' => $class, 'disabled' => $disabled]);
+        $attrs = $this->buildHtmlAttrs(['type' => $type, 'class' => $class, 'style' => $this->formatStyle($style), 'disabled' => $disabled]);
         return '<button ' . $attrs . '>' . $value . '</button>';
     }
 
@@ -214,7 +227,7 @@ class FormBuilder
 
     private function getInputAttributes(): array
     {
-        extract($this->get('render', 'type', 'multiple', 'name', 'size', 'placeholder', 'class', 'help', 'disabled', 'readonly', 'required', 'autocomplete', 'min', 'max', 'value', 'checked', 'formData', 'disableValidation'));
+        extract($this->get('render', 'type', 'multiple', 'name', 'size', 'placeholder', 'class', 'style', 'help', 'disabled', 'readonly', 'required', 'autocomplete', 'min', 'max', 'value', 'checked', 'formData', 'disableValidation'));
 
         $isRadioOrCheckbox = $this->isRadioOrCheckbox();
         $type = $isRadioOrCheckbox ? $render : $type;
@@ -274,6 +287,7 @@ class FormBuilder
 
         return array_merge($attributes, [
             'class' => $class,
+            'style' => $this->formatStyle($style),
             'min' => $min,
             'max' => $max,
             'autocomplete' => $autocomplete,
@@ -287,7 +301,7 @@ class FormBuilder
 
     private function renderLabel(): string
     {
-        extract($this->get('label', 'formInline', 'render'));
+        extract($this->get('label', 'formInline', 'render', 'style'));
 
         $class = in_array($render, ['checkbox', 'radio']) ? 'form-check-label' : '';
         if ($formInline) {
@@ -297,7 +311,8 @@ class FormBuilder
         $id = $this->getId();
         $attrs = $this->buildHtmlAttrs([
             'for' => $id,
-            'class' => $class
+            'class' => $class,
+            'style' => $this->formatStyle($style),
         ], false);
         return '<label ' . $attrs . '>' . $this->getText($label) . '</label>';
     }
@@ -327,7 +342,7 @@ class FormBuilder
 
     private function wrapperInput(string $input): string
     {
-        extract($this->get('type', 'help', 'wrapperAttrs', 'wrapperClass', 'formInline', 'name'));
+        extract($this->get('type', 'help', 'wrapperAttrs', 'wrapperClass', 'wrapperStyle', 'formInline', 'name'));
 
         if ($type === 'hidden') {
             return $input;
@@ -343,6 +358,7 @@ class FormBuilder
             $formInline ? 'input-group' : 'form-group',
             ...(array)$wrapperClass
         );
+        $attrs['style'] = $this->formatStyle($wrapperStyle);
         $attributes = $this->buildHtmlAttrs($attrs, false);
 
         return '<div ' . $attributes . '>' . $label . $input . $helpText . $error . '</div>';
@@ -350,7 +366,7 @@ class FormBuilder
 
     private function wrapperRadioCheckbox(string $input, string $type = null): string
     {
-        extract($this->get('inline', 'name', 'wrapperAttrs', 'wrapperClass'));
+        extract($this->get('inline', 'name', 'wrapperAttrs', 'wrapperClass', 'wrapperStyle'));
 
         $attrs = $wrapperAttrs ?? [];
         $attrs['class'] = $this->createAttrsList(
@@ -359,6 +375,7 @@ class FormBuilder
             $attrs['class'] ?? null,
             ...(array)$wrapperClass
         );
+        $attrs['style'] = $this->formatStyle($wrapperStyle);
         $attributes = $this->buildHtmlAttrs($attrs, false);
         $label = $this->renderLabel();
         $error = $this->getInputErrorMarkup($name);

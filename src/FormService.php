@@ -827,6 +827,28 @@ class FormService
     }
 
     /**
+     * Set style for an input
+     *
+     * @param string|array $style
+     * @return FormService
+     */
+    public function style($style = ''): FormService
+    {
+        return $this->_set('style', $style);
+    }
+
+    /**
+     * Set style for a wrapper
+     *
+     * @param string|array $style
+     * @return FormService
+     */
+    public function wrapperStyle($style = ''): FormService
+    {
+        return $this->_set('wrapperStyle', $style);
+    }
+
+    /**
      * Set custom attributes for an input
      *
      * @param array $attrs
