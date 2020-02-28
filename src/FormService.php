@@ -849,17 +849,6 @@ class FormService
     }
 
     /**
-     * Set style for an input
-     *
-     * @param string|array $style
-     * @return FormService
-     */
-    public function style($style = ''): FormService
-    {
-        return $this->_set('style', $style);
-    }
-
-    /**
      * Set style for a wrapper
      *
      * @param string|array $style
@@ -868,6 +857,61 @@ class FormService
     public function wrapperStyle($style = ''): FormService
     {
         return $this->_set('wrapperStyle', $style);
+    }
+
+    /**
+     * Set custom attributes for a wrapper input
+     *
+     * @param array $attrs
+     * @return FormService
+     */
+    public function wrapperAttrs(array $attrs = []): FormService
+    {
+        return $this->_set('wrapperAttrs', $attrs);
+    }
+
+    /**
+     * Don't use label
+     *
+     * @param bool $noLabel
+     * @return FormService
+     */
+    public function noLabel(bool $noLabel = true): FormService
+    {
+        return $this->_set('noLabel', $noLabel);
+    }
+
+    /**
+     * Don't use input wrapper
+     *
+     * @param bool $noWrapper
+     * @return FormService
+     */
+    public function noWrapper(bool $noWrapper = true): FormService
+    {
+        return $this->_set('noWrapper', $noWrapper);
+    }
+
+    /**
+     * Don't use hidden checkbox
+     *
+     * @param bool $noHiddenCheckbox
+     * @return FormService
+     */
+    public function noHiddenCheckbox(bool $noHiddenCheckbox = true): FormService
+    {
+        return $this->_set('noHiddenCheckbox', $noHiddenCheckbox);
+    }
+
+    /**
+     * Set style for an input
+     *
+     * @param string|array $style
+     * @return FormService
+     */
+    public function style($style = ''): FormService
+    {
+        return $this->_set('style', $style);
     }
 
     /**
@@ -890,17 +934,6 @@ class FormService
     public function disableValidation(bool $disable = true): FormService
     {
         return $this->_set('disableValidation', $disable);
-    }
-
-    /**
-     * Set custom attributes for a wrapper input
-     *
-     * @param array $attrs
-     * @return FormService
-     */
-    public function wrapperAttrs(array $attrs = []): FormService
-    {
-        return $this->_set('wrapperAttrs', $attrs);
     }
 
     /**

@@ -301,7 +301,11 @@ class FormBuilder
 
     private function renderLabel(): string
     {
-        extract($this->get('label', 'formInline', 'render', 'style', 'for'));
+        extract($this->get('label', 'formInline', 'render', 'style', 'for', 'noLabel'));
+
+        if ($noLabel) {
+            return '';
+        }
 
         $class = in_array($render, ['checkbox', 'radio']) ? 'form-check-label' : '';
         if ($formInline) {
@@ -342,7 +346,7 @@ class FormBuilder
 
     private function wrapperInput(string $input): string
     {
-        extract($this->get('type', 'help', 'wrapperAttrs', 'wrapperClass', 'wrapperStyle', 'groupPrepend', 'groupAppend', 'formInline', 'name'));
+        extract($this->get('type', 'help', 'wrapperAttrs', 'wrapperClass', 'wrapperStyle', 'noWrapper', 'groupPrepend', 'groupAppend', 'formInline', 'name'));
 
         if ($type === 'hidden') {
             return $input;
@@ -352,6 +356,19 @@ class FormBuilder
         $label          = $this->renderLabel();
         $helpText       = $help ? '<small id="help-' . $id . '" class="form-text text-muted">' . $this->getText($help) . '</small>' : '';
         $error          = $this->getInputErrorMarkup($name);
+
+        $prepend = $groupPrepend ? sprintf('<div class="input-group-prepend"><span class="input-group-text">%s</span></div>', $groupPrepend) : '';
+        $append = $groupAppend ? sprintf('<div class="input-group-append"><span class="input-group-text">%s</span></div>', $groupAppend) : '';
+        if ($prepend || $append) {
+            $input = '<div class="input-group">' . $prepend . $input . $append . '</div>';
+        }
+
+        $html = $label.$input.$helpText.$error;
+
+        if ($noWrapper) {
+            return $html;
+        }
+
         $attrs          = $wrapperAttrs ?? [];
         $attrs['class'] = $this->createAttrsList(
             $attrs['class'] ?? null,
@@ -361,18 +378,22 @@ class FormBuilder
         $attrs['style'] = $this->formatStyle($wrapperStyle);
         $attributes = $this->buildHtmlAttrs($attrs, false);
 
-        $prepend = $groupPrepend ? sprintf('<div class="input-group-prepend"><span class="input-group-text">%s</span></div>', $groupPrepend) : '';
-        $append = $groupAppend ? sprintf('<div class="input-group-append"><span class="input-group-text">%s</span></div>', $groupAppend) : '';
-        if ($prepend || $append) {
-            $input = '<div class="input-group">' . $prepend . $input . $append . '</div>';
-        }
-
-        return '<div ' . $attributes . '>' . $label . $input . $helpText . $error . '</div>';
+        return '<div '.$attributes.'>'.$html.'</div>';
     }
 
     private function wrapperRadioCheckbox(string $input, string $type = null): string
     {
-        extract($this->get('inline', 'name', 'wrapperAttrs', 'wrapperClass', 'wrapperStyle'));
+        extract($this->get('inline', 'name', 'wrapperAttrs', 'wrapperClass', 'wrapperStyle', 'noWrapper', 'noHiddenCheckbox'));
+
+        $label = $this->renderLabel();
+        $error = $this->getInputErrorMarkup($name);
+        $hidden = $type == 'checkbox' && !$noHiddenCheckbox ? '<input type="hidden" name="'.$this->getName($name).'" value="0" />' : '';
+
+        $html = $hidden.$input.$label.$error;
+
+        if ($noWrapper) {
+            return $html;
+        }
 
         $attrs = $wrapperAttrs ?? [];
         $attrs['class'] = $this->createAttrsList(
@@ -383,11 +404,8 @@ class FormBuilder
         );
         $attrs['style'] = $this->formatStyle($wrapperStyle);
         $attributes = $this->buildHtmlAttrs($attrs, false);
-        $label = $this->renderLabel();
-        $error = $this->getInputErrorMarkup($name);
-        $hidden = $type == 'checkbox' ? '<input type="hidden" name="' . $this->getName($name) . '" value="0" />' : '';
 
-        return '<div ' . $attributes . '>' . $hidden . $input . $label . $error . '</div>';
+        return '<div '.$attributes.'>'.$html.'</div>';
     }
 
     private function getInputErrorMarkup(string $name): string
