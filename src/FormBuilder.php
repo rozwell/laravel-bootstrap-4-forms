@@ -262,7 +262,8 @@ class FormBuilder
         $attributes = [
             'type' => $type,
             'name' => $this->getName(),
-            'id' => $id
+            'id' => $id,
+            'disabled' => $disabled,
         ];
 
         if ($render !== 'select') {
@@ -293,7 +294,6 @@ class FormBuilder
             'autocomplete' => $autocomplete,
             'placeholder' => $this->getText($placeholder),
             'aria-describedby' => $help ? 'help-' . $id : null,
-            'disabled' => $disabled,
             'readonly' => $readonly,
             'required' => $required
         ]);
