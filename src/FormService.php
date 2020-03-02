@@ -827,6 +827,17 @@ class FormService
     }
 
     /**
+     * Set the input title
+     *
+     * @param string $title
+     * @return FormService
+     */
+    public function title($title): FormService
+    {
+        return $this->_set('title', $title);
+    }
+
+    /**
      * Add additional classes for an input
      *
      * @param string|array $classes
@@ -846,6 +857,17 @@ class FormService
     public function wrapperClass($classes = ''): FormService
     {
         return $this->_set('wrapperClass', $classes);
+    }
+
+    /**
+     * Add additional classes for the label
+     *
+     * @param string|array $classes
+     * @return FormService
+     */
+    public function labelClass($classes = ''): FormService
+    {
+        return $this->_set('labelClass', $classes);
     }
 
     /**

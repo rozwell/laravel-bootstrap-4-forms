@@ -193,18 +193,20 @@ class FormBuilder
 
     private function renderAnchor(): string
     {
-        extract($this->get('url', 'value', 'style'));
+        extract($this->get('url', 'value', 'style', 'title'));
         $class = $this->getBtnAnchorClasses();
-        $attrs = $this->buildHtmlAttrs(['href' => $url, 'class' => $class, 'style' => $this->formatStyle($style)]);
-        return '<a ' . $attrs . '>' . $value . '</a>';
+        $attrs = $this->buildHtmlAttrs(['href' => $url, 'class' => $class, 'style' => $this->formatStyle($style), 'title' => $title]);
+
+        return '<a '.$attrs.'>'.$value.'</a>';
     }
 
     private function renderButton(): string
     {
-        extract($this->get('type', 'value', 'disabled', 'class', 'style'));
+        extract($this->get('type', 'value', 'disabled', 'class', 'style', 'title'));
         $class = implode(' ', array_merge((array)$this->getBtnAnchorClasses(), (array)$class));
-        $attrs = $this->buildHtmlAttrs(['type' => $type, 'class' => $class, 'style' => $this->formatStyle($style), 'disabled' => $disabled]);
-        return '<button ' . $attrs . '>' . $value . '</button>';
+        $attrs = $this->buildHtmlAttrs(['type' => $type, 'class' => $class, 'style' => $this->formatStyle($style), 'disabled' => $disabled, 'title' => $title]);
+
+        return '<button '.$attrs.'>'.$value.'</button>';
     }
 
     private function getBtnAnchorClasses()
@@ -227,7 +229,7 @@ class FormBuilder
 
     private function getInputAttributes(): array
     {
-        extract($this->get('render', 'type', 'multiple', 'name', 'size', 'placeholder', 'class', 'style', 'help', 'disabled', 'readonly', 'required', 'autocomplete', 'min', 'max', 'value', 'checked', 'formData', 'disableValidation'));
+        extract($this->get('render', 'type', 'multiple', 'name', 'size', 'placeholder', 'title', 'class', 'style', 'help', 'disabled', 'readonly', 'required', 'autocomplete', 'min', 'max', 'value', 'checked', 'formData', 'disableValidation'));
 
         $isRadioOrCheckbox = $this->isRadioOrCheckbox();
         $type = $isRadioOrCheckbox ? $render : $type;
@@ -293,6 +295,7 @@ class FormBuilder
             'max' => $max,
             'autocomplete' => $autocomplete,
             'placeholder' => $this->getText($placeholder),
+            'title' => $title,
             'aria-describedby' => $help ? 'help-' . $id : null,
             'readonly' => $readonly,
             'required' => $required
@@ -301,24 +304,25 @@ class FormBuilder
 
     private function renderLabel(): string
     {
-        extract($this->get('label', 'formInline', 'render', 'style', 'for', 'noLabel'));
+        extract($this->get('label', 'formInline', 'render', 'labelClass', 'style', 'for', 'noLabel'));
 
         if ($noLabel) {
             return '';
         }
 
-        $class = in_array($render, ['checkbox', 'radio']) ? 'form-check-label' : '';
+        $class = in_array($render, ['checkbox', 'radio']) ? ['form-check-label'] : [];
         if ($formInline) {
-            $class = join(' ', [$class, 'mx-sm-2']);
+            $class[] = 'mx-sm-2';
         }
+        $class = implode(' ', array_merge($class, (array)$labelClass));
 
         $id = $this->getId();
         $attrs = $this->buildHtmlAttrs([
-            'for' => $for ?: $id,
+            'for'   => $for ?: $id,
             'class' => $class,
             'style' => $this->formatStyle($style),
         ], false);
-        return '<label ' . $attrs . '>' . $this->getText($label) . '</label>';
+        return '<label '.$attrs.'>'.$this->getText($label).'</label>';
     }
 
     private function getText($key)
@@ -470,7 +474,6 @@ class FormBuilder
 
     private function buildHtmlAttrs(array $attributes, $appendAttrs = true): string
     {
-
         if ($appendAttrs) {
             extract($this->get('attrs'));
             $fieldAttrs = $attrs ?? [];
