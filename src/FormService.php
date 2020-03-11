@@ -400,7 +400,7 @@ class FormService
      */
     public function select(string $name = null, string $label = null, $options = [], $default = null): FormService
     {
-        return $this->render('select')->name($name)->label($label)->options($options)->value($default);
+        return $this->render('select')->name($name)->label($label)->options((array)$options)->value($default);
     }
 
     /**
@@ -901,6 +901,17 @@ class FormService
     public function noLabel(bool $noLabel = true): FormService
     {
         return $this->_set('noLabel', $noLabel);
+    }
+
+    /**
+     * Don't auto-generate ID
+     *
+     * @param bool $noId
+     * @return FormService
+     */
+    public function noId(bool $noId = true): FormService
+    {
+        return $this->_set('noId', $noId);
     }
 
     /**

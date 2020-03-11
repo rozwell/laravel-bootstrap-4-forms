@@ -429,7 +429,11 @@ class FormBuilder
 
     private function getId()
     {
-        extract($this->get('id', 'name', 'formIdPrefix', 'render', 'value'));
+        extract($this->get('id', 'name', 'formIdPrefix', 'render', 'value', 'noId'));
+
+        if ($noId) {
+            return null;
+        }
 
         if ($id) {
             return $id;
