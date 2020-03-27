@@ -266,6 +266,7 @@ class FormBuilder
             'name'     => $this->getName(),
             'id'       => $id,
             'disabled' => $disabled,
+            'class'    => $class,
         ];
 
         if ($render !== 'select') {
@@ -289,7 +290,6 @@ class FormBuilder
         }
 
         return array_merge($attributes, [
-            'class'            => $class,
             'style'            => $this->formatStyle($style),
             'min'              => $min,
             'max'              => $max,
