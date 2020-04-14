@@ -211,13 +211,14 @@ class FormBuilder
 
     private function getBtnAnchorClasses()
     {
-        extract($this->get('size', 'color', 'outline', 'block', 'type', 'value', 'formInline'));
+        extract($this->get('size', 'color', 'outline', 'block', 'type', 'value', 'formInline', 'class'));
         return $this->createAttrsList(
             'btn',
             [$size, 'btn-'.$size],
             [$color, 'btn-'.($outline ? 'outline-' : '').$color],
             [$block, 'btn-block'],
-            [$formInline, 'mx-sm-2']
+            [$formInline, 'mx-sm-2'],
+            $class
         );
     }
 
