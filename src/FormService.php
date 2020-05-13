@@ -87,9 +87,9 @@ class FormService
      * @param bool $multipart
      * @return FormService
      */
-    public function multipart(bool $multipart = true): FormService
+    public function multipart($multipart = true): FormService
     {
-        return $this->_set('formMultipart', $multipart);
+        return $this->_set('formMultipart', !!$multipart);
     }
 
     /**
@@ -192,9 +192,9 @@ class FormService
      * @param bool $inline
      * @return FormService
      */
-    public function formInline(bool $inline = true): FormService
+    public function formInline($inline = true): FormService
     {
-        return $this->_set('formInline', $inline);
+        return $this->_set('formInline', !!$inline);
     }
 
     /**
@@ -422,9 +422,9 @@ class FormService
      * @param bool $multiple
      * @return FormService
      */
-    public function multiple(bool $multiple = true): FormService
+    public function multiple($multiple = true): FormService
     {
-        return $this->_set('multiple', $multiple);
+        return $this->_set('multiple', !!$multiple);
     }
 
     /**
@@ -433,9 +433,9 @@ class FormService
      * @param bool $isArray
      * @return FormService
      */
-    public function isArray(bool $isArray = true): FormService
+    public function isArray($isArray = true): FormService
     {
-        return $this->_set('isArray', $isArray);
+        return $this->_set('isArray', !!$isArray);
     }
 
     /**
@@ -471,9 +471,9 @@ class FormService
      * @param bool $inline
      * @return FormService
      */
-    public function inline(bool $inline = true): FormService
+    public function inline($inline = true): FormService
     {
-        return $this->_set('inline', $inline);
+        return $this->_set('inline', !!$inline);
     }
 
     /**
@@ -568,9 +568,9 @@ class FormService
      * @param bool $checked
      * @return FormService
      */
-    public function checked(bool $checked = true): FormService
+    public function checked($checked = true): FormService
     {
-        return $this->_set('checked', $checked);
+        return $this->_set('checked', !!$checked);
     }
 
     /**
@@ -766,9 +766,9 @@ class FormService
      * @param bool $outline
      * @return FormService
      */
-    public function outline(bool $outline = true): FormService
+    public function outline($outline = true): FormService
     {
-        return $this->_set('outline', $outline);
+        return $this->_set('outline', !!$outline);
     }
 
     /**
@@ -777,9 +777,9 @@ class FormService
      * @param bool $block
      * @return FormService
      */
-    public function block(bool $block = true): FormService
+    public function block($block = true): FormService
     {
-        return $this->_set('block', $block);
+        return $this->_set('block', !!$block);
     }
 
     /**
@@ -790,7 +790,7 @@ class FormService
      */
     public function readonly($readonly = true): FormService
     {
-        return $this->_set('readonly', $readonly);
+        return $this->_set('readonly', !!$readonly);
     }
 
     /**
@@ -801,7 +801,7 @@ class FormService
      */
     public function disabled($disabled = true): FormService
     {
-        return $this->_set('disabled', $disabled);
+        return $this->_set('disabled', !!$disabled);
     }
 
     /**
@@ -812,7 +812,7 @@ class FormService
      */
     public function required($required = true): FormService
     {
-        return $this->_set('required', $required);
+        return $this->_set('required', !!$required);
     }
 
     /**
@@ -898,9 +898,9 @@ class FormService
      * @param bool $noLabel
      * @return FormService
      */
-    public function noLabel(bool $noLabel = true): FormService
+    public function noLabel($noLabel = true): FormService
     {
-        return $this->_set('noLabel', $noLabel);
+        return $this->_set('noLabel', !!$noLabel);
     }
 
     /**
@@ -909,9 +909,9 @@ class FormService
      * @param bool $noId
      * @return FormService
      */
-    public function noId(bool $noId = true): FormService
+    public function noId($noId = true): FormService
     {
-        return $this->_set('noId', $noId);
+        return $this->_set('noId', !!$noId);
     }
 
     /**
@@ -920,9 +920,9 @@ class FormService
      * @param bool $noWrapper
      * @return FormService
      */
-    public function noWrapper(bool $noWrapper = true): FormService
+    public function noWrapper($noWrapper = true): FormService
     {
-        return $this->_set('noWrapper', $noWrapper);
+        return $this->_set('noWrapper', !!$noWrapper);
     }
 
     /**
@@ -931,9 +931,9 @@ class FormService
      * @param bool $noHiddenCheckbox
      * @return FormService
      */
-    public function noHiddenCheckbox(bool $noHiddenCheckbox = true): FormService
+    public function noHiddenCheckbox($noHiddenCheckbox = true): FormService
     {
-        return $this->_set('noHiddenCheckbox', $noHiddenCheckbox);
+        return $this->_set('noHiddenCheckbox', !!$noHiddenCheckbox);
     }
 
     /**
@@ -964,9 +964,9 @@ class FormService
      * @param string $disable
      * @return FormService
      */
-    public function disableValidation(bool $disable = true): FormService
+    public function disableValidation($disable = true): FormService
     {
-        return $this->_set('disableValidation', $disable);
+        return $this->_set('disableValidation', !!$disable);
     }
 
     /**
