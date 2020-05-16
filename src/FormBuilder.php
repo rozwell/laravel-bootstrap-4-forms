@@ -307,7 +307,7 @@ class FormBuilder
     {
         extract($this->get('label', 'formInline', 'render', 'labelClass', 'style', 'for', 'noLabel'));
 
-        if ($noLabel) {
+        if ($noLabel || $label === null) {
             return '';
         }
 
