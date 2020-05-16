@@ -270,7 +270,7 @@ class FormBuilder
             'class'    => $class,
         ];
 
-        if ($render !== 'select') {
+        if ($render !== 'select' && $type !== 'file') {
             $attributes['value'] = $this->getValue();
         } else {
             $attributes['multiple'] = $multiple;
