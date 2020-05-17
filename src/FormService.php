@@ -247,7 +247,7 @@ class FormService
      * @param string $text
      * @return FormService
      */
-    public function help(string $text): FormService
+    public function help($text): FormService
     {
         return $this->_set('help', $text);
     }
