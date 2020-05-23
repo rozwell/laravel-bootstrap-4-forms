@@ -392,7 +392,7 @@ class FormBuilder
 
         $label = $this->renderLabel();
         $error = $this->getInputErrorMarkup($name);
-        $hidden = $type == 'checkbox' && !$noHiddenCheckbox ? '<input type="hidden" name="'.$this->getName($name).'" value="0" />' : '';
+        $hidden = $type == 'checkbox' && !$noHiddenCheckbox ? '<input type="hidden" name="'.$this->getName($name).'" value="" />' : '';
 
         $html = $hidden.$input.$label.$error;
 
