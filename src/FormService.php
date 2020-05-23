@@ -937,6 +937,17 @@ class FormService
     }
 
     /**
+     * Set empty value for checkbox
+     *
+     * @param string $emptyValue
+     * @return FormService
+     */
+    public function emptyValue($emptyValue = 0): FormService
+    {
+        return $this->_set('emptyValue', $emptyValue);
+    }
+
+    /**
      * Set style for an input
      *
      * @param string|array $style

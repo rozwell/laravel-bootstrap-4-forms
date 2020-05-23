@@ -7,7 +7,9 @@ use Illuminate\Support\ViewErrorBag;
 class FormBuilder
 {
 
-    private $_attrs = [];
+    private $_attrs = [
+        'emptyValue' => false,
+    ];
 
     public function set($key, $value)
     {
@@ -388,11 +390,14 @@ class FormBuilder
 
     private function wrapperRadioCheckbox(string $input, string $type = null): string
     {
-        extract($this->get('inline', 'name', 'wrapperAttrs', 'wrapperClass', 'wrapperStyle', 'noWrapper', 'noHiddenCheckbox'));
+        extract($this->get('inline', 'name', 'wrapperAttrs', 'wrapperClass', 'wrapperStyle', 'noWrapper', 'noHiddenCheckbox', 'emptyValue'));
 
         $label = $this->renderLabel();
         $error = $this->getInputErrorMarkup($name);
-        $hidden = $type == 'checkbox' && !$noHiddenCheckbox ? '<input type="hidden" name="'.$this->getName($name).'" value="0" />' : '';
+        $hidden = $type == 'checkbox' && !$noHiddenCheckbox ? sprintf('<input type="hidden" name="%s" value="%s" />',
+            $this->getName($name),
+            $emptyValue === false ? 0 : $emptyValue
+        ) : '';
 
         $html = $hidden.$input.$label.$error;
 
