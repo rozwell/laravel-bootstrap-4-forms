@@ -7,8 +7,9 @@ use Illuminate\Support\ViewErrorBag;
 class FormBuilder
 {
 
-    private $_attrs = [
-        'emptyValue' => false,
+    private $attrs = [];
+    private $defaultAttrs = [
+        'emptyValue' => null,
     ];
 
     public function set($key, $value)
@@ -341,14 +342,14 @@ class FormBuilder
     {
         // Remove all attributes
         if ($resetAll) {
-            $this->attrs = [];
+            $this->attrs = $this->defaultAttrs;
             return;
         }
 
         // Keep attributes which key starting with 'form'
-        $this->attrs = array_filter($this->attrs, function ($key) {
+        $this->attrs = array_merge($this->defaultAttrs, array_filter($this->attrs, function ($key) {
             return substr($key, 0, 4) === 'form';
-        }, ARRAY_FILTER_USE_KEY);
+        }, ARRAY_FILTER_USE_KEY));
     }
 
     private function wrapperInput(string $input): string
@@ -396,7 +397,7 @@ class FormBuilder
         $error = $this->getInputErrorMarkup($name);
         $hidden = $type == 'checkbox' && !$noHiddenCheckbox ? sprintf('<input type="hidden" name="%s" value="%s" />',
             $this->getName($name),
-            $emptyValue === false ? 0 : $emptyValue
+            $emptyValue === null ? 0 : $emptyValue
         ) : '';
 
         $html = $hidden.$input.$label.$error;
@@ -533,7 +534,7 @@ class FormBuilder
     {
         $return = [];
         foreach ($keys as $key) {
-            $return[$key] = $this->attrs[$key] ?? null;
+            $return[$key] = array_key_exists($key, $this->attrs) ? $this->attrs[$key] : null;
         }
         return $return;
     }
