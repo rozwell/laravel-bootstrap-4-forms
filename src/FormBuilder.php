@@ -256,7 +256,7 @@ class FormBuilder
             }
         }
         if ($setClass) {
-            $class .= ' '.implode(' ', $setClass);
+            $class .= trim(' '.implode(' ', $setClass));
         }
 
         $id = $this->getId();
@@ -446,7 +446,7 @@ class FormBuilder
             return $id;
         }
 
-        return ($formIdPrefix ?? 'inp-').str_replace('.', '-', trim($name, '.-*')).($render === 'radio' ? '-'.$value : '');
+        return ($formIdPrefix ?? '').str_replace('.', '-', trim($name, '.-*')).($render === 'radio' ? '-'.$value : '');
     }
 
     private function getName()

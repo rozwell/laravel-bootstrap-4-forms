@@ -76,7 +76,7 @@ class FormService
      * @param string $prefix
      * @return FormService
      */
-    public function idPrefix(string $prefix = ''): FormService
+    public function idPrefix(string $prefix = 'inp-'): FormService
     {
         return $this->_set('formIdPrefix', $prefix);
     }
