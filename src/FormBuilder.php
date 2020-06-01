@@ -256,7 +256,7 @@ class FormBuilder
             }
         }
         if ($setClass) {
-            $class .= trim(' '.implode(' ', $setClass));
+            $class .= ' '.implode(' ', $setClass);
         }
 
         $id = $this->getId();
@@ -270,7 +270,7 @@ class FormBuilder
             'name'     => $this->getName(),
             'id'       => $id,
             'disabled' => $disabled,
-            'class'    => $class,
+            'class'    => trim($class),
         ];
 
         if ($render !== 'select' && $type !== 'file') {
