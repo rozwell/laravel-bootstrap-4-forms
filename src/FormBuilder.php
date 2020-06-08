@@ -156,7 +156,11 @@ class FormBuilder
 
     private function renderSelect(): string
     {
-        extract($this->get('options'));
+        extract($this->get('options', 'emptyOption'));
+
+        if ($emptyOption !== null) {
+            $options = ['' => $emptyOption] + $options;
+        }
 
         $fieldValue = $this->getValue();
         $arrValues = is_array($fieldValue) ? $fieldValue : [$fieldValue];

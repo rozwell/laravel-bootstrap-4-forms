@@ -948,6 +948,17 @@ class FormService
     }
 
     /**
+     * Set empty option for select
+     *
+     * @param string $emptyValue
+     * @return FormService
+     */
+    public function addEmptyOption($label = ' '): FormService
+    {
+        return $this->_set('emptyOption', $label);
+    }
+
+    /**
      * Set style for an input
      *
      * @param string|array $style
